@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Buscador de Animes v4 - Jikan API</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h1>Buscador de Animes por Nombre (API v4)</h1>
+  <div>
+    <input type="text" id="animeName" placeholder="Nombre del anime" />
+    <button id="buscarBtn">¡Buscar mi anime!</button>
+
+  </div>
+
+  <div id="resultado" style="display: flex; flex-wrap: wrap; gap: 1rem;"></div>
+
+  <div id="detalleAnime" class="detalle" style="display:none;">
+    <button id="cerrarDetalle" style="margin-bottom:1rem;">← Volver a resultados</button>
+    <div id="infoCompleta"></div>
+
+    <h3>Personajes principales:</h3>
+    <div id="personajes" style="display: flex; flex-wrap: wrap; gap: 1rem;"></div>
+
+    <h3>Episodios:</h3>
+    <div id="episodios"></div>
+    <h3>Videos de episodios:</h3>
+    <div id="episodiosVideos" class="episodios-videos"></div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

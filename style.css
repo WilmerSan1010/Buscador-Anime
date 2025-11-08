@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+body {
+  font-family: 'Fredoka One', cursive, Arial, sans-serif;
+  background: linear-gradient(135deg, #7b2ff7, #9d50bb, #6a0dad);
+  color: #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  margin: 0;
+  padding: 2rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 8px #22004daa;
+}
+
+input[type="text"] {
+  padding: 0.8rem 1rem;
+  font-size: 1.2rem;
+  width: 280px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  box-shadow: 0 0 10px #bb99ffcc;
+  transition: box-shadow 0.3s ease;
+  margin-right: 0.7rem;
+  background-color: #32006a;
+  color: #eee;
+}
+
+input[type="text"]:focus {
+  box-shadow: 0 0 18px #d5b3ff;
+  background-color: #4b1fae;
+  color: #fff;
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.3rem;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(45deg, #7b2ff7, #9d50bb);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 12px #7b2ff7cc;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #9d50bb, #7b2ff7);
+  box-shadow: 0 6px 16px #9d50bbcc;
+}
+
+#resultado {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+#resultado > div {
+  cursor: pointer;
+  background: #6a0dadbb;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 0 15px #9d50bbaa;
+  width: 200px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#resultado > div:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 0 25px #9d50bbff;
+}
+
+#resultado img {
+  max-width: 180px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px #9d50bbcc;
+  margin-top: 0.5rem;
+}
+
+.detalle {
+  margin-top: 3rem;
+  width: 95%;
+  max-width: 800px;
+  background: #5b1488dd;
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 0 25px #9d50bbee;
+  color: #fff;
+  text-align: left;
+}
+
+#infoCompleta img {
+  max-width: 250px;
+  float: left;
+  margin-right: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #9d50bbcc;
+}
+
+#infoCompleta h2 {
+  margin-top: 0;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 8px #22004dbb;
+}
+
+#infoCompleta p {
+  clear: both;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-top: 0.8rem;
+  text-shadow: 1px 1px 3px #22004daa;
+}
+
+#personajes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.personaje {
+  width: 130px;
+  text-align: center;
+  background: #7b2ff7cc;
+  padding: 0.5rem;
+  border-radius: 15px;
+  box-shadow: 0 0 15px #9d50bbaa;
+  transition: transform 0.3s ease;
+}
+
+.personaje:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #9d50bbff;
+}
+
+.personaje img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 12px #6a0dadcc;
+  margin-bottom: 0.5rem;
+}
+
+#episodios {
+  margin-top: 3rem;
+  font-size: 1.1rem;
+  color: #d1b3ff;
+}
+
+#episodios p {
+  margin: 0.3rem 0;
+  text-shadow: 1px 1px 4px #4b1286;
+}
+
+.error {
+  color: #f8d7ff;
+  background-color: #7b2ff7cc;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 15px #7b2ff7bb;
+  margin-top: 1.5rem;
+  max-width: 500px;
+  font-weight: bold;
+  text-align: center;
+}
+.episodios-videos {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.episodio-video-card {
+  background: #6a0dadbb;
+  border-radius: 12px;
+  padding: 0.75rem;
+  box-shadow: 0 0 12px #9d50bbaa;
+}
+
+.episodio-video-thumb {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  box-shadow: 0 0 10px #6a0dadcc;
+}
+
+.episodio-video-title {
+  margin: 0.5rem 0 0.25rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.episodio-video-meta {
+  font-size: 0.95rem;
+  color: #e9d7ff;
+}
