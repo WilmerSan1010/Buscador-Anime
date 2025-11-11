@@ -5,8 +5,61 @@ const infoCompletaDiv = document.getElementById('infoCompleta');
 const personajesDiv = document.getElementById('personajes');
 const cerrarDetalleBtn = document.getElementById('cerrarDetalle');
 const episodiosDiv = document.getElementById('episodios');
-// NUEVO: contenedor para videos de episodios
 const episodiosVideosDiv = document.getElementById('episodiosVideos');
+
+// Función para cargar animes aleatorios
+function cargarAnimesAleatorios() {
+  resultadoDiv.innerHTML = '<p>Cargando animes ...</p>';
+  infoCompletaDiv.innerHTML = '';
+  personajesDiv.innerHTML = '';
+  episodiosDiv.innerHTML = '';
+  if (episodiosVideosDiv) episodiosVideosDiv.innerHTML = '';
+  detalleAnimeDiv.style.display = 'none';
+  resultadoDiv.style.display = 'flex';
+  resultadoDiv.style.flexWrap = 'wrap';
+
+  const promesas = Array(10).fill(null).map(() => 
+    fetch('https://api.jikan.moe/v4/random/anime')
+      .then(resp => resp.ok ? resp.json() : null)
+      .then(data => data?.data)
+      .catch(() => null)
+  );
+
+  Promise.all(promesas)
+    .then(animes => {
+      const animesValidos = animes.filter(a => a !== null);
+      
+      if (animesValidos.length === 0) {
+        resultadoDiv.innerHTML = `<p class="error">No se pudieron cargar animes al azar.</p>`;
+        return;
+      }
+
+      resultadoDiv.innerHTML = animesValidos.map(anime => `
+        <div data-id="${anime.mal_id}" tabindex="0" role="button" aria-pressed="false" style="cursor:pointer; margin-bottom: 1.5rem; text-align:center; max-width: 220px;">
+          <h3>${anime.title}</h3>
+          <img src="${anime.images.jpg.image_url}" alt="Imagen de ${anime.title}" style="max-width: 200px; border-radius: 10px; box-shadow: 0 0 10px #00aaffaa;" />
+        </div>
+      `).join('');
+
+      Array.from(resultadoDiv.children).forEach(div => {
+        div.addEventListener('click', () => {
+          cargarDetalles(div.getAttribute('data-id'));
+        });
+        div.addEventListener('keypress', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            cargarDetalles(div.getAttribute('data-id'));
+          }
+        });
+      });
+    })
+    .catch(err => {
+      resultadoDiv.innerHTML = `<p class="error">Error: ${err.message}</p>`;
+    });
+}
+
+// Cargar animes aleatorios al iniciar la página
+cargarAnimesAleatorios();
 
 buscarBtn.addEventListener('click', () => {
   const nombre = document.getElementById('animeName').value.trim();
