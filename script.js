@@ -181,6 +181,7 @@ function cargarDetalles(id) {
       return resp.json();
     })
     .then(data => {
+      console.log('Episodios data:', data); // Debug
       if (!data.data || data.data.length === 0) {
         episodiosDiv.innerHTML = '<p>No hay episodios disponibles.</p>';
         return;
@@ -188,51 +189,50 @@ function cargarDetalles(id) {
 
       // Mostrar los primeros 13 episodios para no saturar
       const primerosEpisodios = data.data.slice(0, 13);
-      episodiosDiv.innerHTML = primerosEpisodios.map(ep => `
-        <p><strong>Episodio ${ep.mal_id}:</strong> ${ep.title || 'Sin título'}</p>
-      `).join('');
+      episodiosDiv.innerHTML = primerosEpisodios.map((ep, index) => {
+        const numEpisodio = ep.mal_id || index + 1;
+        const titulo = ep.title || ep.title_japanese || 'Sin título';
+        return `<p><strong>Episodio ${numEpisodio}:</strong> ${titulo}</p>`;
+      }).join('');
     })
     .catch(err => {
+      console.error('Error episodios:', err);
       episodiosDiv.innerHTML = `<p class="error">${err.message}</p>`;
     });
 
-  // NUEVO: Fetch videos por episodio (miniaturas + enlaces)
+  // Fetch videos por episodio (miniaturas + enlaces)
   if (episodiosVideosDiv) {
+    episodiosVideosDiv.innerHTML = '<p>Cargando videos...</p>';
     fetch(`https://api.jikan.moe/v4/anime/${id}/videos/episodes`)
       .then(resp => {
-        if (!resp.ok) throw new Error('No se pudieron cargar los videos de episodios');
+        if (!resp.ok) {
+          console.warn('Videos endpoint no disponible');
+          return null;
+        }
         return resp.json();
       })
       .then(data => {
-        if (!data.data || data.data.length === 0) {
+        console.log('Videos data:', data); // Debug
+        if (!data || !data.data || data.data.length === 0) {
           episodiosVideosDiv.innerHTML = '<p>No hay videos de episodios disponibles.</p>';
           return;
         }
 
         // Muestra hasta 12 para no saturar la UI
-        const lista = data.data.slice(0, 12).map(item => {
-          // Campos defensivos (varían según el anime)
-          const epNum = item.episode ?? item.mal_id ?? '';
+        const lista = data.data.slice(0, 12).map((item, index) => {
+          const epNum = item.episode ?? item.mal_id ?? index + 1;
           const title = item.title || `Episodio ${epNum}`;
-          const thumb =
-            item.images?.jpg?.image_url ||
-            item.images?.image_url ||
-            item.thumbnail ||
-            '';
-          const videoUrl =
-            item.url ||
-            item.video?.url ||
-            (Array.isArray(item.videos) ? item.videos[0]?.url : undefined) ||
-            '#';
+          const thumb = item.images?.jpg?.image_url || item.images?.image_url || '';
+          const videoUrl = item.url || '#';
 
           return `
             <article class="episodio-video-card">
               ${thumb ? `<a href="${videoUrl}" target="_blank" rel="noopener">
                   <img class="episodio-video-thumb" src="${thumb}" alt="Thumb episodio ${epNum}">
-                </a>` : ''}
+                </a>` : '<div style="height:120px; background:#4b1fae; border-radius:10px; display:flex; align-items:center; justify-content:center;">Sin imagen</div>'}
               <div class="episodio-video-title">${title}</div>
-              <div class="episodio-video-meta">Episodio ${epNum || 'N/D'}</div>
-              <a href="${videoUrl}" target="_blank" rel="noopener">Ver video</a>
+              <div class="episodio-video-meta">Episodio ${epNum}</div>
+              ${videoUrl !== '#' ? `<a href="${videoUrl}" target="_blank" rel="noopener">Ver video</a>` : ''}
             </article>
           `;
         }).join('');
@@ -240,6 +240,7 @@ function cargarDetalles(id) {
         episodiosVideosDiv.innerHTML = lista;
       })
       .catch(err => {
+        console.error('Error videos:', err);
         episodiosVideosDiv.innerHTML = `<p class="error">${err.message}</p>`;
       });
   }
