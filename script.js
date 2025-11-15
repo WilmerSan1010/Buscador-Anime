@@ -18,7 +18,7 @@ function cargarAnimesAleatorios() {
   resultadoDiv.style.display = 'flex';
   resultadoDiv.style.flexWrap = 'wrap';
 
-  const promesas = Array(10).fill(null).map(() => 
+  const promesas = Array(20).fill(null).map(() => 
     fetch('https://api.jikan.moe/v4/random/anime')
       .then(resp => resp.ok ? resp.json() : null)
       .then(data => data?.data)
@@ -115,6 +115,7 @@ buscarBtn.addEventListener('click', () => {
 
 cerrarDetalleBtn.addEventListener('click', () => {
   detalleAnimeDiv.style.display = 'none';
+  cerrarDetalleBtn.style.display = 'none';
   resultadoDiv.style.display = 'flex';
   resultadoDiv.style.flexWrap = 'wrap';
 });
@@ -122,6 +123,7 @@ cerrarDetalleBtn.addEventListener('click', () => {
 // Función para cargar detalles completos, personajes y episodios (+ videos de episodios)
 function cargarDetalles(id) {
   resultadoDiv.style.display = 'none';
+  cerrarDetalleBtn.style.display = 'block';
   detalleAnimeDiv.style.display = 'block';
   infoCompletaDiv.innerHTML = 'Cargando detalles...';
   personajesDiv.innerHTML = '';

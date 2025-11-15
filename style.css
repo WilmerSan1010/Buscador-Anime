@@ -91,7 +91,7 @@ button:hover {
 }
 
 .detalle {
-  margin-top: 3rem;
+  margin-top: 1rem;
   width: 95%;
   max-width: 800px;
   background: #5b1488dd;
@@ -206,4 +206,32 @@ button:hover {
 .episodio-video-meta {
   font-size: 0.95rem;
   color: #e9d7ff;
+}
+
+#cerrarDetalle {
+  display: none;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  margin-left: 20rem;
+  align-self: flex-start;
+  padding: 15px;
+}
+
+#resultado {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  
+}
+
+#personajes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  justify-content: center;
 }
